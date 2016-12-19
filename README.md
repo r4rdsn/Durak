@@ -1,5 +1,5 @@
 # Rules
-Durak (Дурак, translated as Fool) is a popular Russian card game.
+Durak (Дурак, translated as Fool) is a popular Russian card game.  
 the following list contains classic real-life rules of it's basic variant - Podkidnoy (Подкидной, translated as Throw-in) Durak.
 
 * Durak is played with 36-card deck, from 6s to aces
@@ -26,15 +26,15 @@ learn the basics of:
 
 
 # Dependencies
-[python](python.org/) - for everything
-[kivy](github.com/kivy/kivy) - for GUI
+[python](python.org/) - for everything  
+[kivy](github.com/kivy/kivy) - for GUI  
 [pymsgbox](github.com/asweigart/PyMsgBox) - for message box that appears as a game over
 
 
 # Definitions
-**durak_cli.py** - console-version of Podkidnoy Durak with two players, one of which is AI (also contains classes required for game)
-**main.py** - graphical-version of Durak based on kivy library
-**spritesheet.png** - image which contains required sprites for GUI
+**durak_cli.py** - console-version of Podkidnoy Durak with two players, one of which is AI (also contains classes required for game)  
+**main.py** - graphical-version of Durak based on kivy library  
+**spritesheet.png** - image which contains required sprites for GUI  
 **icon.png** - window's icon found with [google](google.com)
 
 
