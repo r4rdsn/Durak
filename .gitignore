@@ -1,0 +1,6 @@
+# compiled source
+*.pyc
+
+# packaging data
+/dist/
+/*.egg-info
