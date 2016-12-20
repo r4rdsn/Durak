@@ -3,4 +3,5 @@
 
 # packaging data
 /dist/
+/build/
 /*.egg-info
