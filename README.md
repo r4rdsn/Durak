@@ -17,25 +17,29 @@ the following list contains classic real-life rules of it's basic variant - Podk
 * if defender picks up cards on the table, he loses their turn to attack, so the next moving player is the clockwise nearest to them
 
 
-# The Goal
-learn the basics of:
-
-1. implementing AI
-2. building GUI
-3. game-development
-
-
 # Dependencies
 [python](https://python.org/) - for everything  
 [kivy](https://github.com/kivy/kivy) - for GUI  
 [pymsgbox](https://github.com/asweigart/PyMsgBox) - for message box that appears as a game over
 
 
-# Definitions
-```game/classes.py``` - required classes  
-```game/cli.py``` - console-version of the game  
-```game/spritesheet.png``` - required sprites for GUI  
-```game/icon.png``` - window's icon found in [google](https://google.com)
+# Installing guide
+* clone this repository:  
+```git clone https://github.com/r4rdsn/Durak/```  
+* follow downloaded folder:  
+```cd Durak```  
+* to run GUI-version:  
+```python -m game```  
+* to run CLI-version:  
+```python -m game.cli```
+
+
+# The Goal
+to learn the basics of:
+
+1. implementing AI
+2. building GUI
+3. game-development
 
 
 # TODO-list
