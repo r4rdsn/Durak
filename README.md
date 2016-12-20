@@ -32,10 +32,10 @@ learn the basics of:
 
 
 # Definitions
-```durak_cli.py``` - console-version of Podkidnoy Durak with two players, one of which is AI (also contains classes required for game)  
-```main.py``` - graphical-version of Durak based on kivy library  
-```spritesheet.png``` - image which contains required sprites for GUI  
-```icon.png``` - window's icon found with [google](https://google.com)
+```game/classes.py``` - required classes  
+```game/cli.py``` - console-version of the game  
+```game/spritesheet.png``` - required sprites for GUI  
+```game/icon.png``` - window's icon found in [google](https://google.com)
 
 
 # TODO-list
