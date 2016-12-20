@@ -1,4 +1,4 @@
-from classes import *
+from . import *
 
 from pymsgbox.native import confirm
 from kivy.config import Config

@@ -1,4 +1,5 @@
-from classes import *
+from .. import *
+
 import os
 from hashlib import md5
 
