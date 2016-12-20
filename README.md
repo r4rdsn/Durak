@@ -26,11 +26,17 @@ the following list contains classic real-life rules of it's basic variant - Podk
 # Installation guide
 * clone this repository:  
 ```git clone https://github.com/r4rdsn/Durak/```  
+* install kivy:
+```pip install kivy```
 * follow downloaded folder:  
-```cd Durak```  
-* to run GUI-version:  
+```cd Durak``` 
+* install package:  
+```python setup.py install```  
+
+after the end of installation you can run the game itself in different versions.  
+to run GUI-version:  
 ```python -m game```  
-* to run CLI-version:  
+to run CLI-version:  
 ```python -m game.cli```
 
 

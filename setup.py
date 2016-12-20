@@ -8,8 +8,5 @@ setup(name='Durak',
       author_email='rchrdsn@protonmail.ch',
       license='MIT',
       packages=['game'],
-      install_requires=[
-          'kivy',     # GUI
-          'pymsgbox'  # message box
-      ],
+      install_requires=['pymsgbox'],
       zip_safe=False)
