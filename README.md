@@ -23,7 +23,7 @@ the following list contains classic real-life rules of it's basic variant - Podk
 [pymsgbox](https://github.com/asweigart/PyMsgBox) - for message box that appears as a game over
 
 
-# Installing guide
+# Installation guide
 * clone this repository:  
 ```git clone https://github.com/r4rdsn/Durak/```  
 * follow downloaded folder:  
