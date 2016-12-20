@@ -1,14 +1,11 @@
 from .. import *
 
 import os
-from hashlib import md5
 
 
 if __name__ == "__main__":
     def clearscreen():
         os.system('cls' if os.name == 'nt' else 'clear')
-
-    cheat_code = '237975ee340d9560cd0af3f8382df77a'
 
     deck.shuffle()
 
@@ -95,9 +92,6 @@ if __name__ == "__main__":
 
         while True:
             move = input('Введите ваш игровой ход: ')
-
-            if md5(move.encode()).hexdigest() == cheat_code:
-                print(opponent.hand)
 
             try:
                 if not move:
