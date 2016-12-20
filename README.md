@@ -33,7 +33,7 @@ the following list contains classic real-life rules of it's basic variant - Podk
 # Installation guide
 * clone this repository:  
 ```git clone https://github.com/r4rdsn/Durak/```  
-* install kivy:
+* install kivy:  
 ```pip install kivy```
 * follow downloaded folder:  
 ```cd Durak``` 
