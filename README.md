@@ -17,6 +17,13 @@ the following list contains classic real-life rules of it's basic variant - Podk
 * if defender picks up cards on the table, he loses their turn to attack, so the next moving player is the clockwise nearest to them
 
 
+# Demonstration
+<details> 
+  <summary>recorded animation</summary>
+   ![gameplay animation](gameplay.gif)
+</details>
+
+
 # Dependencies
 [python](https://python.org/) - for everything  
 [kivy](https://github.com/kivy/kivy) - for GUI  
