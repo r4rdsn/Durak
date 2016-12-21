@@ -10,7 +10,7 @@ from kivy.uix.widget import Widget
 from kivy.clock import Clock
 
 from kivy.core.image import Image
-from kivy.graphics import Rectangle
+from kivy.graphics import Rectangle, Rotate, PushMatrix, PopMatrix
 # from kivy.uix.label import Label
 
 from kivy.uix.behaviors import ButtonBehavior
@@ -18,7 +18,7 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.properties import DictProperty, NumericProperty
 
 
-Window.size = (693, 399)
+Window.size = (728, 399)
 Window.clearcolor = (1, 1, 1, 1)
 Config.set('graphics', 'resizable', False)
 
@@ -54,7 +54,7 @@ atlas = DurakAtlas()
 
 
 class CardSprite(ButtonBehavior, Widget):
-    def __init__(self, x, y, card):
+    def __init__(self, x, y, card, angle=0):
         super(CardSprite, self).__init__()
 
         self.card = card
@@ -63,11 +63,19 @@ class CardSprite(ButtonBehavior, Widget):
         self.pos = x, y
         self.size_hint = (None, None)
         self.size = (atlas.cw, atlas.ch)
+        self.angle = angle
 
         with self.canvas:
+            Rotate(angle=self.angle,
+                   origin=self.center)
+
             self.sprite = Rectangle(pos=self.pos,
                                     size=self.size,
                                     texture=self.texture)
+
+            Rotate(angle=-self.angle,
+                   origin=self.center)
+
 
     def on_press(self):
         if self.card in player.hand:
@@ -130,28 +138,28 @@ class DurakGame(FloatLayout):
 
         self.clear_widgets()
 
-        if deck.deck:
-            for x in range(0, 3 * (len(deck.deck) // 9 + 1) + 1, 3):
-                self.add_widget(CardSprite(x, 138, ('back', 'service')))
-            self.add_widget(CardSprite(x + 1, 138, deck.trump))
+        self.add_widget(CardSprite(27, 5, ('button', 'service')))
 
-        self.add_widget(CardSprite(5, 5, ('button', 'service')))
-
-        x = 99
+        x = 134
         for card in player.hand:
             self.add_widget(CardSprite(x, 5, card))
             cards_amount = len(player.hand)
             x += 495 // ((cards_amount - 1) if cards_amount >= 4 else 3)
 
-        x = 99
+        x = 134
         for card in opponent.hand:
             self.add_widget(CardSprite(x, 271, ('back', 'service')))
             cards_amount = len(opponent.hand)
             x += 495 // ((cards_amount - 1) if cards_amount >= 4 else 3)
 
         for c in range(len(deck.table)):
-            x = (99 if c % 2 == 0 else 114) + (c // 2) * 99
+            x = ((99 if c % 2 == 0 else 114) + (c // 2) * 99) + 35
             self.add_widget(CardSprite(x, 138, deck.table[c]), len(deck.table) - c)
+
+        if deck.deck:
+            for x in range(5, 3 * (len(deck.deck) // 9 + 1) + 6, 3):
+                self.add_widget(CardSprite(x, 138, ('back', 'service')), x)
+            self.add_widget(CardSprite(27, 138, deck.trump, 90), x + 1)
 
         if not player.hand or not opponent.hand:
             Clock.schedule_once(self.over)
@@ -162,12 +170,7 @@ class DurakGame(FloatLayout):
 
         self.clear_widgets()
 
-        if deck.deck:
-            for x in range(0, 3 * (len(deck.deck) // 9 + 1) + 1, 3):
-                self.add_widget(CardSprite(x, 138, ('back', 'service')))
-            self.add_widget(CardSprite(x + 1, 138, deck.trump))
-
-        x = 0
+        x = 35
         for card in player.hand:
             x += 99
             if card == player.trump:
@@ -175,13 +178,18 @@ class DurakGame(FloatLayout):
             else:
                 self.add_widget(CardSprite(x, 5, ('back', 'service')))
 
-        x = 0
+        x = 35
         for card in opponent.hand:
             x += 99
             if card == opponent.trump:
                 self.add_widget(CardSprite(x, 271, card))
             else:
                 self.add_widget(CardSprite(x, 271, ('back', 'service')))
+
+        if deck.deck:
+            for x in range(5, 3 * (len(deck.deck) // 9 + 1) + 6, 3):
+                self.add_widget(CardSprite(x, 138, ('back', 'service')), x)
+            self.add_widget(CardSprite(27, 138, deck.trump, 90), x + 1)
 
     def over(self, dt):
         if not player.hand and not opponent.hand:
