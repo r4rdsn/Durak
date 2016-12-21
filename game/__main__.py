@@ -76,7 +76,6 @@ class CardSprite(ButtonBehavior, Widget):
             Rotate(angle=-self.angle,
                    origin=self.center)
 
-
     def on_press(self):
         if self.card in player.hand:
             try:

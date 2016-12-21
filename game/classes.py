@@ -48,12 +48,11 @@ class Computer(Player):
         def mincard(seq):
             def st(element):
                 if player.moving:
-                    if element[1] == player.move[1] and deck.ranks.index(element[0]) > deck.ranks.index(player.move[0]):
-                        # if element[1] != deck.trump[1] or len(self.without_trumps) < 3 or len(deck.deck) < (9 + random.randint(0, 3)):
+                    if (element[1] == player.move[1] and deck.ranks.index(element[0]) > deck.ranks.index(player.move[0])) \
+                       or element[1] == deck.trump[1] != player.move[1]:
                         return True
                 else:
                     if not deck.table or element[0] in [c[0] for c in deck.table]:
-                        # if element[1] != deck.trump[1] or len(self.without_trumps) < 3 or len(deck.deck) > (9 + random.randint(0, 3)):
                         return True
                 return False
 
@@ -65,23 +64,31 @@ class Computer(Player):
 
         apt = mincard(self.without_trumps)
         if apt is None:
-            apt = mincard(self.hand)
+
+            if len(deck.deck) <= (9 + random.randint(0, 3)) or \
+               (player.moving and len(self.without_trumps) < 3) or \
+               (not player.moving and not deck.table):
+
+                apt = mincard(self.hand)
 
         if apt is not None:
             self.move = apt
+
             self.hand.remove(self.move)
             deck.table.append(self.move)
-        elif player.moving:
-            self.hand += deck.table
-            deck.table = []
 
-            player.fill_hand()
         else:
-            deck.table = []
-            player.moving = True
+            if player.moving:
+                self.hand += deck.table
+                deck.table = []
 
-            opponent.fill_hand()
-            player.fill_hand()
+                player.fill_hand()
+            else:
+                deck.table = []
+                player.moving = True
+
+                opponent.fill_hand()
+                player.fill_hand()
 
 
 class User(Player):

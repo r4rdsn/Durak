@@ -56,7 +56,7 @@ to learn the basics of:
 
 
 # TODO-list
-* improve AI's method (_make_move()_)
+* ~~improve AI's method (_make_move()_)~~
 * ~~place trump card under the deck 90 degrees rotated~~
 * draw discard pile on the screen
 * translate game into English
