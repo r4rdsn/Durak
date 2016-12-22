@@ -170,7 +170,7 @@ class DurakGame(FloatLayout):
             Clock.schedule_once(self.update, 1)
 
         if not deck.deck and \
-           ((not opponent.hand and len(player.hand) > 1) or (not player.hand and len(opponent.hand) > 1)):
+           ((not opponent.hand and len(player.hand) > 1) or (not player.hand and len(opponent.hand) > 1) or (not player.hand and not opponent.hand)):
 
             Clock.schedule_once(self.over)
 
