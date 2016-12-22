@@ -18,7 +18,7 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.properties import DictProperty, NumericProperty
 
 
-Window.size = (728, 399)
+Window.size = (723, 399)
 Window.clearcolor = (1, 1, 1, 1)
 Config.set('graphics', 'resizable', False)
 
@@ -138,28 +138,30 @@ class DurakGame(FloatLayout):
 
         self.clear_widgets()
 
-        self.add_widget(CardSprite(27, 5, ('button', 'service')))
+        self.add_widget(CardSprite(32, 5, ('button', 'service')))
 
-        x = 134
+        x = 144
         for card in player.hand:
             self.add_widget(CardSprite(x, 5, card))
             cards_amount = len(player.hand)
             x += 495 // ((cards_amount - 1) if cards_amount >= 4 else 3)
 
-        x = 134
+        x = 144
         for card in opponent.hand:
             self.add_widget(CardSprite(x, 271, ('back', 'service')))
             cards_amount = len(opponent.hand)
             x += 495 // ((cards_amount - 1) if cards_amount >= 4 else 3)
 
         for c in range(len(deck.table)):
-            x = ((99 if c % 2 == 0 else 114) + (c // 2) * 99) + 35
+            x = ((99 if c % 2 == 0 else 114) + (c // 2) * 99) + 45
             self.add_widget(CardSprite(x, 138, deck.table[c]), len(deck.table) - c)
 
         if deck.deck:
-            for x in range(5, 3 * (len(deck.deck) // 9 + 1) + 5, 3):
-                self.add_widget(CardSprite(x, 138, ('back', 'service')), x)
-            self.add_widget(CardSprite(27, 138, deck.trump, 90), x + 1)
+            if len(deck.deck) > 1:
+                first_card = deck.last_card - 3 * (len(deck.deck) // 9 + 1)
+                for x in range(first_card, deck.last_card, 3):
+                    self.add_widget(CardSprite(x, 138, ('back', 'service')), x)
+            self.add_widget(CardSprite(33, 138, deck.trump, 90), x + 1)
 
         if len(deck.table) == 12:
             player.fill_hand()
@@ -177,7 +179,7 @@ class DurakGame(FloatLayout):
 
         self.clear_widgets()
 
-        x = 35
+        x = 45
         for card in player.hand:
             x += 99
             if card == player.trump:
@@ -185,7 +187,7 @@ class DurakGame(FloatLayout):
             else:
                 self.add_widget(CardSprite(x, 5, ('back', 'service')))
 
-        x = 35
+        x = 45
         for card in opponent.hand:
             x += 99
             if card == opponent.trump:
@@ -194,9 +196,11 @@ class DurakGame(FloatLayout):
                 self.add_widget(CardSprite(x, 271, ('back', 'service')))
 
         if deck.deck:
-            for x in range(5, 3 * (len(deck.deck) // 9 + 1) + 5, 3):
-                self.add_widget(CardSprite(x, 138, ('back', 'service')), x)
-            self.add_widget(CardSprite(27, 138, deck.trump, 90), x + 1)
+            if len(deck.deck) > 1:
+                first_card = deck.last_card - 3 * (len(deck.deck) // 9 + 1)
+                for x in range(first_card, deck.last_card, 3):
+                    self.add_widget(CardSprite(x, 138, ('back', 'service')), x)
+            self.add_widget(CardSprite(33, 138, deck.trump, 90), x + 1)
 
     def over(self, dt):
         if not player.hand and not opponent.hand:
@@ -230,6 +234,8 @@ class DurakApp(App):
         for c in range(6):
             player.take_card()
             opponent.take_card()
+
+        deck.last_card = 5 + 3 * (len(deck.deck) // 9 + 1)
 
         deck.trump = deck.take()
         deck.deck.append(deck.trump)
