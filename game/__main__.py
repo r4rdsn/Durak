@@ -97,7 +97,7 @@ class CardSprite(ButtonBehavior, Widget):
                 player.move = player.hand.pop(move)
                 deck.table.append(player.move)
 
-                if player.hand and opponent.hand and len(deck.table) <= 12:
+                if deck.deck or (player.hand or len(opponent.hand) == 1) and len(deck.table) <= 12:
                     opponent.make_move()
 
             except MoveError as ErrorMessage:
@@ -169,7 +169,9 @@ class DurakGame(FloatLayout):
 
             Clock.schedule_once(self.update, 1)
 
-        if not player.hand or not opponent.hand and not deck.deck:
+        if not deck.deck and \
+           ((not opponent.hand and len(player.hand) > 1) or (not player.hand and len(opponent.hand) > 1)):
+
             Clock.schedule_once(self.over)
 
     def first_state(self):
