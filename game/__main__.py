@@ -11,14 +11,13 @@ from kivy.clock import Clock
 
 from kivy.core.image import Image
 from kivy.graphics import Rectangle, Rotate
-# from kivy.uix.label import Label
 
 from kivy.uix.behaviors import ButtonBehavior
 
 from kivy.properties import DictProperty, NumericProperty
 
 
-Window.size = (723, 399)
+Window.size = (738, 399)
 Window.clearcolor = (1, 1, 1, 1)
 Config.set('graphics', 'resizable', False)
 
@@ -98,7 +97,7 @@ class CardSprite(ButtonBehavior, Widget):
                 player.move = player.hand.pop(move)
                 deck.table.append(player.move)
 
-                if len(deck.table) <= 12:
+                if player.hand and opponent.hand and len(deck.table) <= 12:
                     opponent.make_move()
 
             except MoveError as ErrorMessage:
