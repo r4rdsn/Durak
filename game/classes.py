@@ -55,6 +55,7 @@ class Computer(Player):
                     if not deck.table or element[0] in [c[0] for c in deck.table]:
                         return True
                 return False
+                return True
 
             minimum = None
             for element in seq:

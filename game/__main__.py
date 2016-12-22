@@ -10,7 +10,7 @@ from kivy.uix.widget import Widget
 from kivy.clock import Clock
 
 from kivy.core.image import Image
-from kivy.graphics import Rectangle, Rotate, PushMatrix, PopMatrix
+from kivy.graphics import Rectangle, Rotate
 # from kivy.uix.label import Label
 
 from kivy.uix.behaviors import ButtonBehavior
@@ -98,7 +98,8 @@ class CardSprite(ButtonBehavior, Widget):
                 player.move = player.hand.pop(move)
                 deck.table.append(player.move)
 
-                opponent.make_move()
+                if len(deck.table) <= 12:
+                    opponent.make_move()
 
             except MoveError as ErrorMessage:
                 print(ErrorMessage)
@@ -156,11 +157,18 @@ class DurakGame(FloatLayout):
             self.add_widget(CardSprite(x, 138, deck.table[c]), len(deck.table) - c)
 
         if deck.deck:
-            for x in range(5, 3 * (len(deck.deck) // 9 + 1) + 6, 3):
+            for x in range(5, 3 * (len(deck.deck) // 9 + 1) + 5, 3):
                 self.add_widget(CardSprite(x, 138, ('back', 'service')), x)
             self.add_widget(CardSprite(27, 138, deck.trump, 90), x + 1)
 
-        if not player.hand or not opponent.hand:
+        if len(deck.table) == 12:
+            player.fill_hand()
+            opponent.fill_hand()
+            deck.table = []
+
+            Clock.schedule_once(self.update, 1)
+
+        if not player.hand or not opponent.hand and not deck.deck:
             Clock.schedule_once(self.over)
 
     def first_state(self):
@@ -186,7 +194,7 @@ class DurakGame(FloatLayout):
                 self.add_widget(CardSprite(x, 271, ('back', 'service')))
 
         if deck.deck:
-            for x in range(5, 3 * (len(deck.deck) // 9 + 1) + 6, 3):
+            for x in range(5, 3 * (len(deck.deck) // 9 + 1) + 5, 3):
                 self.add_widget(CardSprite(x, 138, ('back', 'service')), x)
             self.add_widget(CardSprite(27, 138, deck.trump, 90), x + 1)
 
