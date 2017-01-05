@@ -33,13 +33,13 @@ for c in range(6):
 clearscreen()
 
 if player.trump:
-    print('Ваша наименьшая козырная карта:', ''.join(player.trump))
+    print(cliLocal.players_lowest_trump, ''.join(player.trump))
 else:
-    print('У вас в руке нет козырных карт.')
+    print(cliLocal.opponents_lowest_trump)
 if opponent.trump:
-    print('Минимальный козырь у оппонента:', ''.join(opponent.trump))
+    print(cliLocal.player_no_trumps, ''.join(opponent.trump))
 else:
-    print('У вашего оппонента нет козырей.')
+    print(cliLocal.opponent_no_trumps)
 
 if player.trump and opponent.trump:
     if deck.order(player.trump) < deck.order(opponent.trump):
@@ -54,9 +54,9 @@ else:
     player.moving = random.randint(0, 1)
 
 if player.moving:
-    print('Вы ходите первым.')
+    print(cliLocal.player_moving_first)
 else:
-    print('Оппонент ходит первым.')
+    print(cliLocal.opponent_moving_first)
 
 print()
 
@@ -70,28 +70,28 @@ while True:
     player.show()
 
     if player.moving and player.throwing:
-        print('Вы подкинули на стол', ''.join(player.move))
+        print(cliLocal.player_threw, ''.join(player.move))
         if opponent.move:
-            print('Оппонент отбился картой', ''.join(opponent.move))
+            print(cliLocal.opponent_defended, ''.join(opponent.move))
         else:
-            print('Оппонент взял карты.')
+            print(cliLocal.opponent_resigned)
 
     elif not player.moving:
         if len(deck.table) > 1:
-            print('Вы отбились картой', ''.join(player.move))
-        print('Оппонент подкинул на стол', ''.join(opponent.move))
+            print(cliLocal.player_defended, ''.join(player.move))
+        print(cliLocal.opponent_threw, ''.join(opponent.move))
 
     if not player.hand or not opponent.hand:
         if not player.hand and not opponent.hand:
-            print('Ничья!')
+            print(result.draw)
         elif not player.hand:
-            print('Вы победили!')
+            print(result.victory)
         else:
-            print('Вы проиграли...')
+            print(result.loss)
         break
 
     while True:
-        move = input('Введите ваш игровой ход: ')
+        move = input(cliLocal.ask_move)
 
         try:
             if not move:
@@ -123,13 +123,13 @@ while True:
                     if not player.throwing:
                         player.throwing = True
                     elif not player.hand[move][0] in table_ranks:
-                        raise MoveError('Эту карту нельзя подкинуть ни к одной на столе.\n')
+                        raise MoveError(warning.throw)
 
                 else:
                     if opponent.move[1] != player.hand[move][1] != deck.trump[1]:
-                        raise MoveError('Бьющая карта должна быть той же масти или козырем.\n')
+                        raise MoveError(warning.beat_suit)
                     if deck.order(player.hand[move]) < deck.order(opponent.move):
-                        raise MoveError('Бьющая карта должна быть старше побиваемой.\n')
+                        raise MoveError(warning.beat_rank)
 
                 player.move = player.hand.pop(move)
                 deck.table.append(player.move)
@@ -137,8 +137,8 @@ while True:
                 break
 
         except (TypeError, ValueError, IndexError):
-            print('Ход должен содержать номер карты в вашей руке.\n')
+            print(waning.move_format + '\n')
         except MoveError as ErrorMessage:
-            print(ErrorMessage)
+            print(ErrorMessage + '\n')
 
     clearscreen()

@@ -86,13 +86,13 @@ class CardSprite(ButtonBehavior, Widget):
                     if not player.throwing:
                         player.throwing = True
                     elif not player.hand[move][0] in table_ranks:
-                        raise MoveError('[ERROR] Эту карту нельзя подкинуть ни к одной на столе')
+                        raise MoveError(warning.throw)
 
                 else:
                     if opponent.move[1] != player.hand[move][1] != deck.trump[1]:
-                        raise MoveError('[ERROR] Бьющая карта должна быть той же масти или козырем')
+                        raise MoveError(warning.beat_suit)
                     if deck.order(player.hand[move]) < deck.order(opponent.move):
-                        raise MoveError('[ERROR] Бьющая карта должна быть старше побиваемой')
+                        raise MoveError(warning.beat_rank)
 
                 player.move = player.hand.pop(move)
                 deck.table.append(player.move)
@@ -101,7 +101,7 @@ class CardSprite(ButtonBehavior, Widget):
                     opponent.make_move()
 
             except MoveError as ErrorMessage:
-                print(ErrorMessage)
+                logger.warning_message(ErrorMessage)
 
         elif self.card == ('button', 'service'):
             try:
@@ -125,7 +125,7 @@ class CardSprite(ButtonBehavior, Widget):
                 opponent.make_move()
 
             except ValueError:
-                print('[ERROR] Вы должны выбрать карту на первом ходе')
+                logger.warning_message(warning.first_move)
 
         Clock.schedule_once(game.update, 0)
 
@@ -205,22 +205,22 @@ class DurakGame(FloatLayout):
 
     def over(self, dt):
         if not player.hand and not opponent.hand:
-            message = 'Ничья!'
+            message = result.draw
         elif not player.hand:
-            message = 'Вы победили!'
+            message = result.victory
         else:
-            message = 'Вы проиграли...'
-        title = 'Игра окончена'
-        buttons = ('Сыграть ещё раз', 'Выйти из игры')
+            message = result.loss
+        title = result.game_over
+        buttons = (result.play_again_btn, result.quit_game_btn)
 
         answer = confirm(message, title, buttons)
+        app.stop()
+
         if answer == buttons[0]:
             deck.__init__()
             opponent.__init__()
             player.__init__()
             app.run()
-        else:
-            app.stop()
 
 
 game = DurakGame()

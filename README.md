@@ -47,6 +47,27 @@ to run CLI-version:
 ```python -m game.cli```
 
 
+# Localization guide
+to get english-version of the game, you should just slightly modify the ```__init__.py``` in the ```game``` directory:  
+
+* choose one of the listed language from the docstring  
+* copy the line represeting your chosen language  
+* replace the line under docstring with your chosen line  
+
+if you know some specific languages that are not supported by this game yet, and you'd like to contribute and help translating the game, please:  
+
+* follow ```local``` folder  
+* make a copy of the file that translates the game to any language you know  
+* translate the strings in this file  
+* rename your file to the short form of the name of your language  
+* modify the doctring in ```game/__init__.py```, by adding the line in the "existing option" list like this:  
+```from local.<```_your file's title_```> import *```,  
+replacing <_your file's title_> with short form of your language
+* send pull request  
+
+i'll appreciate it!
+
+
 # The Goal
 to learn the basics of:
 
@@ -59,6 +80,6 @@ to learn the basics of:
 * ~~improve AI's method (_make_move()_)~~
 * ~~place trump card under the deck 90 degrees rotated~~
 * draw discard pile on the screen
-* translate game into English
+* ~~translate game into English~~
 * refactor the code
 * provide listing with comments and documentation
