@@ -48,7 +48,7 @@ to run CLI-version:
 
 
 # Localization guide
-to get english-version of the game, you should just slightly modify the ```__init__.py``` in the ```game``` directory:  
+to get english-version of the game, you should just slightly modify the [__init__.py](game/__init__.py) in the [game](game) directory:  
 
 * choose one of the listed language from the docstring  
 * copy the line represeting your chosen language  
